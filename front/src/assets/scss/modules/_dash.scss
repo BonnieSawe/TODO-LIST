@@ -1,0 +1,69 @@
+aside {
+  width: 250px;
+  background: black;
+}
+
+.aside {
+  &--nav {
+    .nav-link {
+      color: white;
+      transition: all 0.2s ease;
+      line-height: 30px;
+      &:hover,
+      &:focus {
+        background: rgba(white, 0.3);
+        color: white;
+      }
+
+      &.router-link-exact-active {
+        border-left: 3px solid white;
+      }
+    }
+  }
+}
+
+header{
+    background: white;
+}
+
+main {
+  background: #eaeaea;
+  overflow: auto;
+}
+
+@media screen and(max-width: 768px) {
+  aside {
+    width: 250px;
+    height: 100%;
+    z-index: 50;
+    flex: 0 0 auto;
+    position: fixed;
+    transform: translateX(-100%);
+    transition: all .2s ease;
+
+    &.active{
+        transform: translateX(0);
+    }
+  }
+
+  .aside {
+    &--backdrop {
+      z-index: 49;
+      position: fixed;
+      background: rgba(black, 0.1);
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      content: "";
+      display: block;
+      transition: all .23s ease;
+      visibility: hidden;
+      opacity: 0;
+      &.active{
+          visibility: visible;
+          opacity: 1;
+    }
+    }
+  }
+}
