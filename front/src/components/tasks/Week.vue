@@ -22,7 +22,8 @@
 
 <script>
 
-export default({
-    name: "WeekView",
-})
+export default {
+    name: 'WeekView',
+    props: {},
+}
 </script>
