@@ -16,6 +16,7 @@ class CreateMemosTable extends Migration
         Schema::create('memos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('todo_item_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });
