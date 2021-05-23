@@ -1,31 +1,29 @@
 import $axios from "@/plugins/axios";
 
-class Staff {
+class TodoItem {
   constructor() {}
 
   async get() {
     try {
-      const { data } = await $axios.get("/admin/staff");
+      const { data } = await $axios.get("/todo-items");
       return data;
     } catch (error) {
       console.error(error);
       return error.response.data;
     }
   }
-  async save(payload) {
+  async store(form) {
     try {
-      const { data } = await $axios.post("/admin/staff/create", payload);
+      const { data } = await $axios.post("/todo-items/store", form);
       return data;
     } catch (error) {
       console.error(error);
       return error.response.data;
     }
   }
-  async delete(staff) {
+  async delete(id) {
     try {
-      const { data } = await $axios.delete("/admin/staff/remove", {
-        staff,
-      });
+      const { data } = await $axios.delete("/todo-items/delete/$"+id);
       return data;
     } catch (error) {
       console.error(error);
@@ -34,4 +32,4 @@ class Staff {
   }
 }
 
-export default new Staff();
+export default new TodoItem();

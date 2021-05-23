@@ -17,18 +17,5 @@ function createRouter() {
     routes,
   });
 
-  router.beforeEach(beforeEach);
-  router.afterEach(afterEach);
-
   return router;
 }
-
-
-
-async function beforeEach(to, from, next) {
-  let isAuthenticated = store.getters["auth/check"];
-
-  next();
-}
-
-async function afterEach(to, from, next) {}
