@@ -1,6 +1,6 @@
 import $axios from "@/plugins/axios";
 
-class TodoItem {
+class Todo {
   constructor() {}
 
   async get() {
@@ -32,4 +32,4 @@ class TodoItem {
   }
 }
 
-export default new TodoItem();
+export default new Todo();

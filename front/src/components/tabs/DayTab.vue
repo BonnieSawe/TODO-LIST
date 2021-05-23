@@ -6,9 +6,9 @@
 
         <AddTask></AddTask>
 
-        <!-- <hr class="mt-2"> -->
+        <hr v-if="pinnedTasks" class="mt-2">
 
-        <Task> </Task>
+        <SingleTask> </SingleTask>
 
     </b-tab>
 </template>
@@ -27,6 +27,7 @@ export default {
                 { name: "Weddings", img: "person.jpg" },
             ],
             currentSlide: 0,
+            pinnedTasks: false,
             maxSlide: null,
             currItem: {},
         }

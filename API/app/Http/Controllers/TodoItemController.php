@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Memo;
 use App\Models\TodoItem;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
 use App\Http\Resources\TodoItemResource;
-
+use  Illuminate\Support\Facades\Validator;
 class TodoItemController extends Controller
 {
     public function index()
@@ -30,7 +29,7 @@ class TodoItemController extends Controller
 
         $todo_item = TodoItem::create($request->all());
 
-        $success['todo_item'] = new TodoItemResource($todo_item);
+        $success['created'] = new TodoItemResource($todo_item);
 
         return $this->sendResponse($success, 'Todo item added successfully!');
     }

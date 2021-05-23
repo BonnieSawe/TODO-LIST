@@ -16,6 +16,7 @@ class CreateTodoItemsTable extends Migration
         Schema::create('todo_items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->dateTime('date');
             $table->timestamps();
             $table->softDeletes();
         });

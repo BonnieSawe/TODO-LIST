@@ -2,7 +2,7 @@
     <div class="mb-3">
         <h5 class="day-title pr-3">Wednesday</h5>
         <hr class="mt-2">
-        <Task></Task>
+        <SingleTask></SingleTask>
     </div>
 </template>
 
@@ -11,6 +11,7 @@
 export default {
     name: 'DayTask',
     props: {},
+    
 }
 </script>
 

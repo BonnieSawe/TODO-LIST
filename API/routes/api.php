@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TodoItemController;
 use App\Http\Controllers\SocialAuthController;
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('auth/user', [AuthController::class, 'current']);
 
     Route::post('/auth/logout', [AuthController::class, 'logout']);
+
+    Route::group(['prefix' => 'todo-items'], function () {
+        Route::post ('store', [TodoItemController::class, 'store']);
+        Route::post ('delete', [TodoItemController::class, 'delete']);
+        Route::post ('validate', [TodoItemController::class, 'validateToken']);
+    });
 });
