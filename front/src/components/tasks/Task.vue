@@ -2,7 +2,7 @@
     <div class="mb-3 row d-flex">
 
         <div class="float-left pr-2 invisible">
-            <i class="fa fa-thumb-tack"></i>
+            <i class="fa fa-thumb-tack pinned"></i>
         </div>
 
         <div class="custom-control custom-checkbox">
@@ -12,8 +12,8 @@
             <span class="">One of my  goals in 2017</span>
         </div>
 
-        <div class="ml-auto pr-3">
-            <b-icon icon="three-dots" class="three-dots" font-scale="2"></b-icon>
+        <div class="ml-auto pl-5">
+            <Actions></Actions>
         </div>
     </div>
 </template>

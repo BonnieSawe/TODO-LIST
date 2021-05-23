@@ -97,12 +97,10 @@
   }
 
   .fa-thumb-tack{
-    color: #e55c8a;
     transform: rotate(315deg);
   }
 
-  .three-dots{
-      width: 18px;
-      color: #ccd7e2;
+  .pinned{
+    color: #e55c8a;
   }
 </style>
