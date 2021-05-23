@@ -6,13 +6,10 @@ import ForgotPassword from "@/views/auth/ForgotPassword";
 import ResetPassword from "@/views/auth/ResetPassword";
 import store from '@/store'
 
-function guardMyroute(to, from, next)
+function guardRoute(to, from, next)
 {
-  var isAuthenticated= false;
-  if(store.getters["auth/check"])
-    isAuthenticated = true;
-  else
-    isAuthenticated= false;
+  var isAuthenticated = store.getters["auth/check"];
+
   if(isAuthenticated) 
   {
     next(); 
@@ -28,7 +25,7 @@ export const routes = [
       {
         path: "/",
         name: "home",
-        beforeEnter : guardMyroute,
+        beforeEnter : guardRoute,
         component: Home,
       },
 

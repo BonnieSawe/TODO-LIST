@@ -2,17 +2,7 @@
   <main class="d-flex align-items-center mx-0 h-100">
     <div class="container">
       <div class="row w-100 mx-0 justify-content-center">
-        <b-card class="col-lg-7 col-xl-7 flex-row mx-auto px-0">
-            <b-tabs card align="center">
-              
-              <DayTab></DayTab>
-              
-              <WeekTab></WeekTab>
-            </b-tabs>
-            <div class="card-body">
-              <slot />
-            </div>
-        </b-card>
+        <slot />
       </div>
     </div>
   </main>

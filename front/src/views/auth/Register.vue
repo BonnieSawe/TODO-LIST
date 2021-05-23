@@ -1,6 +1,14 @@
 <template>
     <AuthWrap>
-        <form @submit.prevent="signUp" class="form-box px-3">
+        <Card v-if="mustVerifyEmail">
+            <h4 class="title text-center mt-4">
+                Register
+            </h4>
+            <div class="alert alert-success" role="alert">
+                We sent you an email with an the verification link.
+            </div>
+        </Card>
+        <form v-else @submit.prevent="signUp" class="form-box px-3">
             <h4 class="title text-center mt-4">
                 Register
             </h4>
@@ -39,7 +47,7 @@
                     class="form-control"
                     type="password"
                     required
-                    v-model="user.confirm_password"
+                    v-model="user.password_confirmation"
                 />
             </div>
 
@@ -72,17 +80,49 @@
     </AuthWrap>
 </template>
 <script>
+    import Auth from "@/services/auth";
     export default {
     name: "Register",
     data() {
         return {
             user: {},
             error: null,
+            mustVerifyEmail: false,
             loading: false,
+            access_token: null,
         };
     },
     methods: {
-        signUp() {},
+        async signUp() {
+            this.loading = true;
+            this.error = null;
+            const { data, success, message, errors=null } = await Auth.register(this.user);
+            console.log(data);
+            if (message) {
+                this.loading = false;
+            }
+
+            if (success) {
+
+                if (data.email_verified_at == null) {
+                    this.mustVerifyEmail = true;
+                } else {
+                    const { data, success, message } = await Auth.login(this.user);
+
+                    this.access_token = data.token;
+
+                    this.$store.dispatch("auth/saveToken", { access_token:this.access_token });
+
+                    // Update the user.
+                    await this.$store.dispatch("auth/updateUser", { user: data });
+
+                    // Redirect home.
+                    this.$router.push({ name: "home" });
+                }
+            } else {
+                this.error = message+' : '+errors;
+            }
+        },
     },
     };
 </script>

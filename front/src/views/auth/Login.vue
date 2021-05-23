@@ -49,10 +49,10 @@
         </div>
 
         <div class="mt-3">
-            <router-link :to="{name: 'register'}" class="btn btn-block btn-social">
+            <b-button @click="socialLogin" class="btn btn-block btn-social">
                 <span class="pr-2"><i class="fa fa-google"></i></span>
                 Sign In with Google
-            </router-link>
+            </b-button>
         </div>
 
         <br class="my-4">
@@ -73,14 +73,19 @@ export default {
   data() {
     return {
       user: {
-        email: "bonnie@syntax.com",
-        password: "secret",
+        email: "badboneye@gmail.com",
+        password: "123456",
       },
       error: null,
       loading: false,
     };
   },
   methods: {
+    async socialLogin(){
+      console.log(235);
+      const data = await Auth.socialLogin('google');
+      console.log(data);
+    },
     async login() {
       this.loading = true;
       const { data, success, message } = await Auth.login(this.user);
@@ -88,11 +93,9 @@ export default {
       if (message) {
         this.loading = false;
       }
-
       if (success) {
         await this.$store.dispatch("auth/saveToken", {
-          token: data.access_token,
-          remember: this.rememberMe,
+          token: data.token,
         });
 
         // Fetch the user.

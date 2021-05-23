@@ -11,6 +11,11 @@ use  Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
+    public function current(Request $request)
+    {
+        return response()->json($request->user());
+    }
+    
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -31,7 +36,7 @@ class AuthController extends Controller
 
         $user->token = $user->createToken('TODOAppToken')->plainTextToken;
 
-        $success['user'] = new AuthUserResource($user);
+        $success['data'] = new AuthUserResource($user);
 
         return $this->sendResponse($success, 'Registered successfully');
     }
@@ -55,7 +60,7 @@ class AuthController extends Controller
         $user = auth()->user();
         $user->token = $user->createToken('TODOAppToken')->plainTextToken;
 
-        $success['user'] = new AuthUserResource($user);
+        $success['data'] = new AuthUserResource($user);
 
         return $this->sendResponse($success, 'Welcome back');
     }
