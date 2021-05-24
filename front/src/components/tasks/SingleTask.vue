@@ -13,7 +13,7 @@
         </div>
 
         <div class="ml-auto pl-5">
-            <Actions></Actions>
+            <Actions :data="todoItem.id" @removeItem="removeItem"></Actions>
         </div>
     </div>
 </template>
@@ -27,5 +27,11 @@ export default {
             return this.data ? this.data : {};
         },        
     },
+    methods: {
+        removeItem(todoItemId)
+        {
+            this.$emit("removeItem", todoItemId);
+        }
+    }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div v-if="todoItems.length">
         <div class="" v-for="todoItem in todoItems" :key="todoItem.id">
-            <SingleTask :data="todoItem"></SingleTask>
+            <SingleTask :data="todoItem" @removeItem="removeItem"></SingleTask>
         </div>
     </div>
     <div v-else>
@@ -17,6 +17,13 @@ export default {
         todoItems() {
             return this.data ? this.data : {};
         },
+
+    methods: {
+        removeItem(todoItemId)
+        {
+            this.todoItems.splice(this.todoItems.indexOf(todoItemId), 1);
+        }
+    }
         
     },
 }

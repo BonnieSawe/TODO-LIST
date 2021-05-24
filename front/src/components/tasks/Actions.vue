@@ -5,24 +5,34 @@
             <template #button-content>
                 <b-icon icon="three-dots" class="float-right three-dots" font-scale="2"></b-icon>
             </template>
-            <b-dropdown-item>
+            <b-dropdown-item @click="pinItem(todoItemId)">
                 <i class="fa fa-thumb-tack"></i>
                 Pin on the top
             </b-dropdown-item>
             <b-dropdown-item>Add a memo</b-dropdown-item>
-            <b-dropdown-item-button>Delete</b-dropdown-item-button>
+            <b-dropdown-item-button @click="deleteItem">Delete</b-dropdown-item-button>
         </b-dropdown>
 
     </div>
 </template>
 <script>
-
+import Todo from '@/services/todo';
 export default {
     name: 'ActionsButton',
-    props: {},
+    props: ["data"],
+    computed: {
+        todoItemId() {
+            return this.data ? this.data : {};
+        },        
+    },
 
     methods: {
-        
+        async deleteItem(){
+            const { created, success, message } = await Todo.delete(this.todoItemId);
+            if (success) {
+                this.$emit("removeItem", this.todoItemId);
+            }
+        }
     }
 }
 </script>
