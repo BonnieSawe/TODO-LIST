@@ -92,6 +92,7 @@ class TodoItemController extends Controller
 
     public function destroy(Request $request)
     {
+        info($request->all());
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
         ]);
@@ -100,9 +101,13 @@ class TodoItemController extends Controller
             return $this->sendError('Validation Error', $validator->errors());
         } 
 
-        $todo_item = TodoItem::find($id)->delete();
+        $todo_item = TodoItem::find($request->input('id'));
 
-        $success['todo_item'] = new TodoItemResource($todo_item);
+        if ($todo_item) {
+            $todo_item->delete();
+        }
+
+        $success['deleted'] = new TodoItemResource($todo_item);
 
         return $this->sendResponse($success, 'Todo item deleted successfully!');
     }

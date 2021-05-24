@@ -39,6 +39,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get ('day', [TodoItemController::class, 'getDayItems']);
         Route::get ('week', [TodoItemController::class, 'getWeekItems']);
         Route::post ('store', [TodoItemController::class, 'store']);
-        Route::post ('delete', [TodoItemController::class, 'delete']);
+        Route::post ('delete', [TodoItemController::class, 'destroy']);
     });
 });
