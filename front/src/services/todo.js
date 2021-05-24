@@ -38,9 +38,19 @@ class Todo {
       return error.response.data;
     }
   }
+
   async delete(id) {
     try {
-      const { data } = await $axios.delete("/todo-items/delete/$"+id);
+      const { data } = await $axios.post("/todo-items/delete/", {id: id});
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
+  async addMemo(form) {
+    try {
+      const { data } = await $axios.post("/todo-items/add-memo/", form);
       return data;
     } catch (error) {
       return error.response.data;

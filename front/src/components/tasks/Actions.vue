@@ -5,14 +5,13 @@
             <template #button-content>
                 <b-icon icon="three-dots" class="float-right three-dots" font-scale="2"></b-icon>
             </template>
-            <b-dropdown-item @click="pinItem(todoItemId)">
-                <i class="fa fa-thumb-tack"></i>
+            <b-dropdown-item @click="pinItem">
+                <i class="fa fa-thumb-tack"> </i> 
                 Pin on the top
             </b-dropdown-item>
-            <b-dropdown-item>Add a memo</b-dropdown-item>
+            <b-dropdown-item @click="triggerAddMemo">Add a memo</b-dropdown-item>
             <b-dropdown-item-button @click="deleteItem">Delete</b-dropdown-item-button>
         </b-dropdown>
-
     </div>
 </template>
 <script>
@@ -28,11 +27,20 @@ export default {
 
     methods: {
         async deleteItem(){
-            const { created, success, message } = await Todo.delete(this.todoItemId);
+            const { deleted, success, message } = await Todo.delete(this.todoItemId);
+
             if (success) {
-                this.$emit("removeItem", this.todoItemId);
+                this.$emit("deleteItem", this.todoItemId);
             }
-        }
+        },
+
+        pinItem(){
+        },
+        
+        triggerAddMemo() {
+            this.$emit("triggerAddMemo", this.todoItemId);
+            // this.$refs["add-memo-modal"].show();
+        },
     }
 }
 </script>

@@ -12,8 +12,17 @@
             <TaskMemos :data="todoItem.memos"></TaskMemos>
         </div>
 
+        <!-- <AddMemo></AddMemo> -->
+
+
         <div class="ml-auto pl-5">
-            <Actions :data="todoItem.id" @removeItem="removeItem"></Actions>
+            <Actions 
+                :data="todoItem.id" 
+                @deleteItem="deleteItem" 
+                @triggerAddMemo="triggerAddMemo"
+            >
+
+            </Actions>
         </div>
     </div>
 </template>
@@ -28,10 +37,14 @@ export default {
         },        
     },
     methods: {
-        removeItem(todoItemId)
+        deleteItem(todoItemId)
         {
-            this.$emit("removeItem", todoItemId);
-        }
+            this.$emit("deleteItem", todoItemId);
+        },
+
+        triggerAddMemo(todoItemId) {
+            this.$emit("triggerAddMemo", todoItemId);
+        },
     }
 }
 </script>

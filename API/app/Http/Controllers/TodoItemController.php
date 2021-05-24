@@ -8,6 +8,7 @@ use App\Models\TodoItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\MemoResource;
 use App\Http\Resources\TodoItemResource;
 use  Illuminate\Support\Facades\Validator;
 
@@ -70,6 +71,27 @@ class TodoItemController extends Controller
         $success['created'] = new TodoItemResource($todo_item);
 
         return $this->sendResponse($success, 'Todo item added successfully!');
+    }
+
+    public function addMemo(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'todo_item_id' => 'required|integer',
+            'name' => 'required|string',
+        ]);
+
+        if($validator->fails()) {
+            return $this->sendError('Validation Error', $validator->errors());
+        } 
+
+        $memo = Memo::create([
+            'name' => $request->input('name'),
+            'todo_item_id' => $request->input('todo_item_id'),
+        ]);
+
+        $success['created'] = new MemoResource($memo);
+
+        return $this->sendResponse($success, 'Memo added successfully!');
     }
 
     public function update(Request $request)

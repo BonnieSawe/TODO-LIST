@@ -7,11 +7,20 @@
 
         </DayCarousel>
 
-        <AddTask :data="currentDate.date"></AddTask>
+        <AddTask :data="currentDate.date" @newTodoItem="addTodoItem"></AddTask>
 
         <hr v-if="pinnedTasks" class="mt-2">
 
         <AllTasks :data="todoItems"> </AllTasks>
+
+        <!-- <b-button
+        id="show-btn"
+        @click="$bvModal.show('bv-modal-example')"
+        >
+        Open Modal
+        </b-button>
+        <b-modal id="bv-modal-example">Hello From My Modal!</b-modal> -->
+
 
     </b-tab>
 </template>
@@ -59,6 +68,10 @@ export default {
             }else{
                 this.todoItems = [];
             }
+        },
+
+        addTodoItem(item) {
+            this.todoItems.push(item);
         },
     }
 

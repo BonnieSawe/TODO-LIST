@@ -3,7 +3,7 @@
         <h5 class="day-title pr-3">Wednesday</h5>
         <hr class="mt-2">
         <div class="" v-for="todoItem in dayTodoItems" :key="todoItem.id">
-            <SingleTask :data="todoItem"></SingleTask>
+            <SingleTask :data="todoItem" @removeItem="removeItem"></SingleTask>
         </div>
     </div>
 </template>
@@ -17,8 +17,13 @@ export default {
         dayTodoItems() {
             return this.data ? this.data : {};
         },
-        
     },
+    methods: {
+        removeItem(todoItemId)
+        {
+            // this.$emit("removeItem", todoItemId);
+        }
+    }
     
 }
 </script>

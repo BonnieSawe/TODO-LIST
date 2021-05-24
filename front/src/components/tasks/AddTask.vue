@@ -45,11 +45,11 @@ export default {
             if (success) {
                 this.form = {}
                 this.success = message
+                this.$emit('newTodoItem', created)
 
             } else {
                 this.error = message;
             }
-
         }
     }
 }
