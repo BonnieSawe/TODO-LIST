@@ -15,7 +15,8 @@ class TodoItem extends Model
     protected $fillable = [
         'name',
         'user_id',
-        'date'
+        'date',
+        'pinned',
     ];
 
     public function user(): BelongsTo

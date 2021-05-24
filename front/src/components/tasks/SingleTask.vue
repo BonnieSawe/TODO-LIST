@@ -83,13 +83,10 @@
             async saveMemo()
             {
                 this.form.todo_item_id = this.todoItemId;
-                console.log(this.form);
                 const { created, success, message } = await Todo.addMemo(this.form);
                 if (success) {
                     this.form = {}
-                    this.success = message
-                    this.todoItem.memos.push(created);
-                    
+                    this.todoItem.memos.push(created);                    
                     this.$refs['add-memo-modal'].hide()
                 } else {
                     this.error = message;

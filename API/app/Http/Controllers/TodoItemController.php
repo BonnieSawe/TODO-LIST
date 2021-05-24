@@ -24,6 +24,7 @@ class TodoItemController extends Controller
 
     public function getDayItems(Request $request)
     {
+        // return Auth::id();
         $todo_items = TodoItem::where('user_id', Auth::id())
                         ->where('date', Carbon::parse($request->date))
                         ->with('memos')
