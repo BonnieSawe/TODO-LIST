@@ -1,0 +1,17 @@
+
+@import 'variables';
+
+@import '~bootstrap/scss/bootstrap';
+
+@import "~bootstrap-vue/src/index";
+
+// @import 'modules/base';
+// @import 'modules/dash';
+// @import 'modules/forms';
+// @import 'modules/typography';
+// @import 'modules/cards';
+
+@import 'pages/auth';
+
+@import 'custom/buttons';
+@import 'custom/tabs';

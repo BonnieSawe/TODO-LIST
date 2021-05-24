@@ -1,0 +1,15 @@
+@media screen and (max-width: 768px){
+    .display-3{
+        font-size: 3em;
+    }
+}
+
+.font-weight{
+    &-semibold{
+        font-weight: 600 !important;
+    }
+
+    &-medium{
+        font-weight: 500 !important;
+    }
+}
