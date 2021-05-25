@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\MemoResource;
 use App\Http\Resources\TodoItemResource;
 use  Illuminate\Support\Facades\Validator;
-
+use App\Http\Resources\WeekTodoItemResource;
 class TodoItemController extends Controller
 {
     public function index()
@@ -40,7 +40,7 @@ class TodoItemController extends Controller
         $from = Carbon::parse($request->startDate);
         $to = Carbon::parse($request->endDate);
 
-        $todo_items = TodoItem::where('user_id', Auth::id())
+        $days = TodoItem::where('user_id', Auth::id())
                         ->select( DB::raw('DAYNAME(todo_items.date) as day'), 'todo_items.*')
                         ->whereBetween('date', [$from, $to])
                         ->with('memos')
@@ -48,7 +48,18 @@ class TodoItemController extends Controller
                         ->get()
                         ->groupBy('day');
 
-        $success['todo_items'] = TodoItemResource::collection($todo_items);
+        $formatted_days = collect();
+        
+        $i = 0;
+        foreach ($days as $key => $day_items) {
+            $new_day = new \StdClass;
+            $new_day->index = $i++;
+            $new_day->day_name = $key;
+            $new_day->todo_items = TodoItemResource::collection($day_items);
+            $formatted_days->push($new_day);
+        }
+
+        $success['days'] = $formatted_days;
 
         return $this->sendResponse($success, 'Todo items fetched successfully!');
     }
@@ -126,11 +137,13 @@ class TodoItemController extends Controller
 
         $todo_item = TodoItem::find($request->input('id'));
 
+        $success['deleted'] = new \stdClass();
+
         if ($todo_item) {
             $todo_item->delete();
+            $success['deleted'] = new TodoItemResource($todo_item);
         }
 
-        $success['deleted'] = new TodoItemResource($todo_item);
 
         return $this->sendResponse($success, 'Todo item deleted successfully!');
     }

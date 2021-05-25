@@ -14,7 +14,7 @@ class AddPinnedColumnToTodoItemsTable extends Migration
     public function up()
     {
         Schema::table('todo_items', function (Blueprint $table) {
-            $table->boolean('pinned')->nullable();
+            $table->boolean('pinned')->nullable()->after('date');
         });
     }
 
