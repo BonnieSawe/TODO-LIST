@@ -24,8 +24,8 @@ class TodoItem extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function memos(): HasMany
+    public function memo(): HasOne
     {
-        return $this->hasMany(Memo::class);
+        return $this->hasOne(Memo::class);
     }
 }

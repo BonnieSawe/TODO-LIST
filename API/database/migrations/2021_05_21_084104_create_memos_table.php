@@ -29,6 +29,6 @@ class CreateMemosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('memos');
+        Schema::dropIfExists('');
     }
 }

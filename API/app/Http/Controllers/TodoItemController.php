@@ -27,7 +27,7 @@ class TodoItemController extends Controller
         // return Auth::id();
         $todo_items = TodoItem::where('user_id', Auth::id())
                         ->where('date', Carbon::parse($request->date))
-                        ->with('memos')
+                        ->with('memo')
                         ->orderBy('created_at', 'desc')
                         ->get();
         $success['todo_items'] = TodoItemResource::collection($todo_items);
@@ -43,7 +43,7 @@ class TodoItemController extends Controller
         $days = TodoItem::where('user_id', Auth::id())
                         ->select( DB::raw('DAYNAME(todo_items.date) as day'), 'todo_items.*')
                         ->whereBetween('date', [$from, $to])
-                        ->with('memos')
+                        ->with('memo')
                         ->orderBy('created_at', 'desc')
                         ->get()
                         ->groupBy('day');
