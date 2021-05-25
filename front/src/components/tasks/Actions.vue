@@ -1,16 +1,22 @@
 <template>
-    <div>
+    <div class="">
         <!-- <b-icon icon="three-dots" class="three-dots" font-scale="2" @click="showDropDown"></b-icon> -->
-        <b-dropdown variant="link" toggle-class="text-decoration-none pr-5 drop-down" no-caret size="sm" right class="drop-down-div">
+        <b-dropdown  variant="link" toggle-class="text-decoration-none pr-5 drop-down" no-caret size="lg" right class="drop-down-div">
             <template #button-content>
                 <b-icon icon="three-dots" class="float-right three-dots" font-scale="2"></b-icon>
             </template>
-            <b-dropdown-item @click="pinItem">
-                <i class="fa fa-thumb-tack"> </i> 
+            <b-dropdown-item-button @click="pinItem">
+                <span class="mr-5"><i class="fa fa-thumb-tack"> </i></span>
                 Pin on the top
-            </b-dropdown-item>
-            <b-dropdown-item @click="triggerAddMemo">Add a memo</b-dropdown-item>
-            <b-dropdown-item-button @click="deleteItem">Delete</b-dropdown-item-button>
+            </b-dropdown-item-button>
+            <b-dropdown-item-button @click="triggerAddMemo">
+                <span class="mr-5"><i class="fa fa-file"> </i></span>
+                Add a memo
+            </b-dropdown-item-button>
+            <b-dropdown-item-button @click="deleteItem">
+                <span class="mr-5"><i class="fa fa-trash"> </i></span>
+                Delete
+            </b-dropdown-item-button>
         </b-dropdown>
     </div>
 </template>
@@ -45,19 +51,23 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .three-dots{
         width: 18px;
         color: #ccd7e2;
     }
     
-    .dropdown-menu{
+    .dropdown.show {
         min-width: 0 !important;
         /* Style for "Union 4" */
         width: 137px;
-        height: 100px;
+        // height: 100px;
+        color: #ccd7e2;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        background-color: #484f59 !important;
+        background-color: #484f59;
+    }
 
+    #dropdownMenuButton__BV_toggle_ {
+        width: 100%;
     }
 </style>

@@ -6,10 +6,10 @@
         </div>
 
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" :id="todoItem.id" name="">
-            <label class="custom-control-label" :for="todoItem.id">{{todoItem.name}}</label>
+            <input type="checkbox" class="custom-control-input" :id="todoItem.id+uniqueKey" name="">
+            <label class="custom-control-label" :for="todoItem.id+uniqueKey">{{todoItem.name}}</label>
 
-            <TaskMemos :data="todoItem.memos"></TaskMemos>
+            <TaskMemo :data="todoItem.memo"></TaskMemo>
         </div>
 
         <!-- <AddMemo></AddMemo> -->
@@ -46,7 +46,7 @@
     import Todo from '@/services/todo'
     export default {
         name: 'SingleTask',
-        props: ["data"],
+        props: ["data", "uniqueKey"],
         data() {
             return {
                 form: {},
@@ -66,10 +66,6 @@
                 this.$emit("deleteItem", todoItemId);
             },
 
-            // triggerAddMemo(todoItemId) {
-            //     this.$emit("triggerAddMemo", todoItemId);
-            // },
-
             triggerAddMemo(todoItemId) {
                 this.todoItemId = todoItemId;
                 this.$refs["add-memo-modal"].show();
@@ -86,7 +82,6 @@
                 const { created, success, message } = await Todo.addMemo(this.form);
                 if (success) {
                     this.form = {}
-                    this.todoItem.memos.push(created);                    
                     this.$refs['add-memo-modal'].hide()
                 } else {
                     this.error = message;

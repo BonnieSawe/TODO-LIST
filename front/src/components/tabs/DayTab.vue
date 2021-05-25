@@ -2,7 +2,7 @@
 
     <b-tab class="tab1" title="Day">
 
-        <DayCarousel :data="currentDate"
+        <DayCarousel :data="currentDate" :weekSelected="false"
             @triggerSwipeDay="triggerSwipeDay">
 
         </DayCarousel>
@@ -12,14 +12,6 @@
         <hr v-if="pinnedTasks" class="mt-2">
 
         <AllTasks :data="todoItems"> </AllTasks>
-
-        <!-- <b-button
-        id="show-btn"
-        @click="$bvModal.show('bv-modal-example')"
-        >
-        Open Modal
-        </b-button>
-        <b-modal id="bv-modal-example">Hello From My Modal!</b-modal> -->
 
 
     </b-tab>

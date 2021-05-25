@@ -1,7 +1,23 @@
 <template>
     <div>
-        <b-alert v-if="success" class="mt-3" show variant="success">{{success}}</b-alert>
-        <b-alert v-if="error" class="mt-3" show variant="danger">{{error}}</b-alert>
+        <b-toast :id="'successToast'+weekSelected" variant="warning" solid>
+            <template #toast-title>
+                <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
+                <div class="d-flex flex-grow-1 align-items-baseline">
+                    <strong class="mr-auto">Task added successfully, cheers!</strong>
+                </div>
+            </template>
+        </b-toast>
+
+        <b-toast :id="'errorToast'+weekSelected" variant="warning" solid>
+            <template #toast-title>
+                <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
+                <div class="d-flex flex-grow-1 align-items-baseline">
+                    <strong class="mr-auto">There was an error adding task, try again later.</strong>
+                </div>
+            </template>
+        </b-toast>
+
         <div class="mt-5 pt-3 form-input">
             <span class="pt-3"><i class="fa fa-list" aria-hidden="true"></i></span>
             <b-form-input
@@ -14,6 +30,14 @@
             @keyup.enter="addTask"
             />
         </div>
+
+        <b-modal v-if="weekSelected" ref="choose-date-modal" centered hide-footer hide-header title="Add Memo">
+            <h3 class="choose-date-title text-white text-center pt-2 pb-2">Choose Date</h3>
+            <div class="mb-2 text-center">
+                <b-calendar id="datepicker" v-model="form.date" @context="onContext" class="mb-2 calenda"></b-calendar>
+                <button @click="addTask" class="btn btn-primary text-white mt-2" type="submit">Proceed</button>
+            </div>
+        </b-modal>
     </div>
 </template>
 <script>
@@ -25,32 +49,69 @@ export default {
             form: {},
             error: null,
             success: null,
+            responseMessage: null,
+            context: null,
+            value: null
+
         }
     },
 
-    props: ["data"],
+    props: ["data", "weekSelected"],
     computed: {
         currDate() {
-            return this.data ? this.data : {};
-        },
-        
+            return this.data ? this.data : null;
+        },        
+    },
+
+    mounted() {
+        console.log(this.props)
     },
 
     methods: {
+
+        onContext(ctx) {
+            this.context = ctx
+        },
+
         async addTask()
         {
-            this.error = this.success = null;
-            this.form.date = this.currDate;
-            const { created, success, message } = await Todo.store(this.form);
+            if (this.weekSelected && !this.form.date) {
+                this.$refs["choose-date-modal"].show();
+                return false;
+            }
+
+            if (this.weekSelected) {
+                this.$refs["choose-date-modal"].hide();
+            }else{
+                this.form.date = this.currDate;
+            }
+
+            this.error = null;
+
+            const { created, success, message, errors } = await Todo.store(this.form);
+
+            this.responseMessage = message+' '+errors;
+
             if (success) {
+
+                this.$bvToast.show('successToast'+this.weekSelected)
+
                 this.form = {}
-                this.success = message
-                this.$emit('newTodoItem', created)
+                this.context = null;
+                this.$emit('newTodoItem', created);
 
             } else {
-                this.error = message;
+                this.$bvToast.show('errorToast'+this.weekSelected)
             }
         }
     }
 }
 </script>
+
+<style lang="scss">
+    .calenda{
+        .text-dark, #datepicker__calendar-grid-caption_, .b-calendar-grid-weekdays, .b-calendar-nav, .form-control-sm   {
+            color:#ccd7e2 !important;
+        }
+    }
+</style>

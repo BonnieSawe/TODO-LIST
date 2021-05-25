@@ -68,7 +68,10 @@ class TodoItemController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
+            'date' => 'required|date',
         ]);
+
+        info($request->all());
 
         if($validator->fails()) {
             return $this->sendError('Validation Error', $validator->errors());

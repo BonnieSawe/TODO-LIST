@@ -14,6 +14,11 @@
 export default {
     name: 'AllTasks',
     props: ["data"],
+    data(){
+        return{
+            day: {},
+        }
+    },
     computed: {
         todoItems() {
             return this.data ? this.data : {};

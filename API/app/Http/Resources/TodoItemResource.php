@@ -23,7 +23,7 @@ class TodoItemResource extends JsonResource
             'date' => $this->date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'memo' => MemoResource::collection($this->memo),
+            'memo' => new MemoResource($this->memo),
         ];
     }
 }

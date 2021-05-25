@@ -1,12 +1,11 @@
 <template>
-    <div v-if="todoItems.length">
-        <div class="" v-for="dayItems in todoItems" :key="dayItems">
-            <DayTasks :data="dayItems"></DayTasks>
+    <div v-if="days.length">
+        <div class="" v-for="day in days" :key="day.index">
+            <DayTasks :data="day"></DayTasks>
         </div>
     </div>
     <div v-else>
-        <!-- <NoItems></NoItems> -->
-        <h3>Hello no</h3>
+        <NoItems></NoItems>
     </div>
 </template>
 <script>
@@ -15,8 +14,7 @@ export default {
     name: 'WeekTasks',
     props: ["data"],
     computed: {
-        todoItems() {
-            console.log(this.data.length);
+        days() {
             return this.data ? this.data : {};
         },
         

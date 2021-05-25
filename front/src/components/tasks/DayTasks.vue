@@ -1,9 +1,9 @@
 <template>
     <div class="mb-3">
-        <h5 class="day-title pr-3">Wednesday</h5>
+        <h5 class="day-title pr-3">{{day.day_name}}</h5>
         <hr class="mt-2">
-        <div class="" v-for="todoItem in dayTodoItems" :key="todoItem.id">
-            <SingleTask :data="todoItem" @removeItem="removeItem"></SingleTask>
+        <div class="" v-for="todoItem in todoItems" :key="day.index+todoItem.id">
+            <SingleTask :data="todoItem" :uniqueKey="'week'" @deleteItem="deleteItem"></SingleTask>
         </div>
     </div>
 </template>
@@ -14,15 +14,19 @@ export default {
     name: 'DayTasks',
     props: ["data"],
     computed: {
-        dayTodoItems() {
+        day() {
             return this.data ? this.data : {};
+        },
+
+        todoItems() {
+            return this.data.todo_items ? this.data.todo_items : {};
         },
     },
     methods: {
-        removeItem(todoItemId)
+        deleteItem(todoItemId)
         {
-            // this.$emit("removeItem", todoItemId);
-        }
+            this.todoItems.splice(this.todoItems.indexOf(todoItemId), 1);
+        },
     }
     
 }
