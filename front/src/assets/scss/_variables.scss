@@ -1,0 +1,33 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap');
+
+$font: 'Jost', sans-serif;
+
+$alice-blue: #eff7ffff;
+$charcoal: #2c4251ff;
+$fuzzy-wuzzy: #d16666ff;
+$android-green: #b6c649ff;
+$maximum-yellow-red: #ffc857ff;
+
+$primary: $fuzzy-wuzzy;
+$primary-alt: $maximum-yellow-red;
+$body-bg: $alice-blue;
+$body-color: $charcoal;
+
+$theme-colors:(
+    'primary-alt' :$primary-alt,
+    'android-green': $android-green,
+);
+
+$dark: $charcoal;
+$light: $alice-blue;
+
+$font-family-sans-serif: $font;
+
+$btn-padding-x: 5em;
+$btn-padding-x-sm: 2em;
+$btn-padding-x-lg: 6em;
+
+$border-radius: 0;
+$border-radius-sm: 0;
+$border-radius-lg: 0;

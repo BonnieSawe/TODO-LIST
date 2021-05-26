@@ -1,0 +1,21 @@
+.btn-list{
+    display: flex;
+    justify-content: flex-end;
+
+    .btn+.btn{
+        margin-left: 1em;
+    }
+
+    &--modal{
+        width: 100%;
+        padding: 1em;
+    }
+}
+
+@media screen and(max-width: 768px){
+    .btn{
+        $pd-x: 2em;
+        padding-left: $pd-x;
+        padding-right: $pd-x;
+    }
+}

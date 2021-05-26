@@ -1,0 +1,9 @@
+.vendor{
+    &--header-image{
+        object-position: center;
+        object-fit: cover;
+        max-height: 500px;
+        width: 100%;
+        border-radius: $border-radius;
+    }
+}
