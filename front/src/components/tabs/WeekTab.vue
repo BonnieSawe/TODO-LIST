@@ -6,8 +6,6 @@
             @triggerSwipeWeek="getWeekItems">
         </WeekCarousel>
 
-        <AddTask :data="null" :weekSelected="true" @newTodoItem="addTodoItem"></AddTask>
-
         <hr v-if="pinnedTasks" class="mt-2">
 
         <WeekTasks :data="days"> </WeekTasks>

@@ -34,7 +34,7 @@
         <b-modal v-if="weekSelected" ref="choose-date-modal" centered hide-footer hide-header title="Add Memo">
             <h3 class="choose-date-title text-white text-center pt-2 pb-2">Choose Date</h3>
             <div class="mb-2 text-center">
-                <b-calendar id="datepicker" v-model="form.date" @context="onContext" class="mb-2 calenda"></b-calendar>
+                <b-calendar :min="minFDate" :max="maxFDate" id="datepicker" v-model="form.date" @context="onContext" class="mb-2 calenda"></b-calendar>
                 <button @click="addTask" class="btn btn-primary text-white mt-2" type="submit">Proceed</button>
             </div>
         </b-modal>
@@ -56,15 +56,25 @@ export default {
         }
     },
 
-    props: ["data", "weekSelected"],
+    props: ["data", "weekSelected", "minDate", "maxDate"],
     computed: {
         currDate() {
             return this.data ? this.data : null;
-        },        
+        }, 
+        
+        minFDate() {
+            return new Date(this.minDate);
+        }, 
+        
+        maxFDate() {
+            return new Date(this.maxDate);
+        } 
     },
 
     mounted() {
-        console.log(this.props)
+        // console.log(this.props)
+        // this.minFDate = new Date(this.minDate);
+        // this.maxFDate = new Date(this.maxDate);
     },
 
     methods: {

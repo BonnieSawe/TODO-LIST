@@ -1,36 +1,39 @@
 <template>
-
-    <div class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner text-center">
-            <div class="carousel-item active">
-                <h3>{{formattedStartDate + ' - ' + formattedEndDate}}</h3>
-                <span>{{startDateDay + ' - ' + endDateDay}}</span>
+    <div>
+        <div class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner text-center">
+                <div class="carousel-item active">
+                    <h3>{{formattedStartDate + ' - ' + formattedEndDate}}</h3>
+                    <span>{{startDateDay + ' - ' + endDateDay}}</span>
+                </div>
             </div>
+            <a role="button" class="carousel-control-prev" @click="triggerSwipeWeek(endDate, -1)">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </a>
+            <a role="button" class="carousel-control-next" @click="triggerSwipeWeek(endDate, 1) ">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </a>
+
+            <b-toast id="min-toast" variant="warning" solid>
+                <template #toast-title>
+                    <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
+                    <div class="d-flex flex-grow-1 align-items-baseline">
+                        <strong class="mr-auto">Min Date Reached</strong>
+                    </div>
+                </template>
+            </b-toast>
+
+            <b-toast id="max-toast" variant="warning" solid>
+                <template #toast-title>
+                    <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
+                    <div class="d-flex flex-grow-1 align-items-baseline">
+                        <strong class="mr-auto">Max Date Reached</strong>
+                    </div>
+                </template>
+            </b-toast>
         </div>
-        <a role="button" class="carousel-control-prev" @click="triggerSwipeWeek(endDate, -1)">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </a>
-        <a role="button" class="carousel-control-next" @click="triggerSwipeWeek(endDate, 1) ">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </a>
 
-        <b-toast id="min-toast" variant="warning" solid>
-            <template #toast-title>
-                <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
-                <div class="d-flex flex-grow-1 align-items-baseline">
-                    <strong class="mr-auto">Min Date Reached</strong>
-                </div>
-            </template>
-        </b-toast>
-
-        <b-toast id="max-toast" variant="warning" solid>
-            <template #toast-title>
-                <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
-                <div class="d-flex flex-grow-1 align-items-baseline">
-                    <strong class="mr-auto">Max Date Reached</strong>
-                </div>
-            </template>
-        </b-toast>
+        <AddTask :data="null" :minDate="startDate" :maxDate="endDate" :weekSelected="true" @newTodoItem="addTodoItem"></AddTask>
     </div>
 </template>
 <script>
@@ -114,6 +117,11 @@
 
                 this.$emit("triggerSwipeWeek", this.startDate,this.endDate);
             },
+
+            addTodoItem(item)
+            {
+                this.$emit('newTodoItem', item);
+            }
         }
     }
 </script>
