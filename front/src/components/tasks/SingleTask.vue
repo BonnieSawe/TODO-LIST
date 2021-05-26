@@ -5,18 +5,20 @@
             <i class="fa fa-thumb-tack pinned"></i>
         </div>
 
-        <div class="custom-control custom-checkbox ">
-            <b-form-checkbox
+        <div class="">
+            <b-form-checkbox class="custom-control custom-checkbox "
             :id="todoItem.main_key"
             v-model="todoItem.completed" @change="completeItem"
             >
             {{todoItem.name}}
+
+            <TaskMemo class="" :data="todoItem.memo"></TaskMemo>
+
             </b-form-checkbox>
 
             <!-- <input type="checkbox" class="custom-control-input" :id="todoItem.main_key" name="">
             <label class="custom-control-label" :for="todoItem.main_key">{{todoItem.name}}</label> -->
 
-            <TaskMemo :data="todoItem.memo"></TaskMemo>
         </div>
 
         <!-- <AddMemo></AddMemo> -->

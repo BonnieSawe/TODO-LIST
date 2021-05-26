@@ -1,5 +1,5 @@
 <template>
-    <div v-if="memo">
+    <div v-if="memo" class="checkbox-span">
         <span class="">{{memo.name}}</span>
     </div>
 </template>
@@ -15,3 +15,10 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+    .chekbox-span{
+    }
+</style>
+
+
