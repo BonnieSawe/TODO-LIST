@@ -6,8 +6,15 @@
         </div>
 
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" :id="todoItem.id+uniqueKey" name="">
-            <label class="custom-control-label" :for="todoItem.id+uniqueKey">{{todoItem.name}}</label>
+            <b-form-checkbox
+            :id="todoItem.main_key"
+            v-model="todoItem.completed" @change="completeItem"
+            >
+            {{todoItem.name}}
+            </b-form-checkbox>
+
+            <!-- <input type="checkbox" class="custom-control-input" :id="todoItem.main_key" name="">
+            <label class="custom-control-label" :for="todoItem.main_key">{{todoItem.name}}</label> -->
 
             <TaskMemo :data="todoItem.memo"></TaskMemo>
         </div>
@@ -15,7 +22,8 @@
         <!-- <AddMemo></AddMemo> -->
 
         <b-modal ref="add-memo-modal" centered hide-footer hide-header title="Add Memo" ::passedObject="todoItemId" class="text-center">
-            <h3 class="add-memo-title pt-2 pb-2">ADD A MEMO</h3>
+            <h3 class="add-memo-title pt-2 pb-2" v-if="!editable">ADD A MEMO</h3>
+            <h3 class="add-memo-title pt-2 pb-2" v-else>Edit MEMO</h3>
             <form @submit.prevent="saveMemo">
                 <b-form-input
                     :state="null"
@@ -25,7 +33,14 @@
                     v-model="form.name"
                     required
                 />
-                <b-button class="btn-sm submit-memo mt-3 mr-2 col-md-3" type="submit"><span class="btn-text">Add Memo</span></b-button>
+                <b-button class="btn-sm submit-memo mt-3 mr-2 col-md-3" v-if="!editable" type="submit">
+                    <span class="btn-text" >Add Memo</span>
+                </b-button>
+
+                <b-button class="btn-sm submit-memo mt-3 mr-2 col-md-3"  v-else type="submit">
+                    <span class="btn-text">Edit Memo</span>
+                </b-button>
+
                 <b-button class="btn-sm cancel-memo mt-3 mr-2 col-md-3" @click="hideModal"><span class="btn-text">Cancel</span></b-button>
             </form>
         </b-modal>
@@ -33,7 +48,7 @@
 
         <div class="ml-auto pl-5">
             <Actions 
-                :data="todoItem.id" 
+                :data="todoItem" 
                 @deleteItem="deleteItem" 
                 @triggerAddMemo="triggerAddMemo"
             >
@@ -53,21 +68,26 @@
                 todoItemId: null,
                 error: null,
                 success: null,
+                editable:false,
+                checkedItem:{},
             }
         },
         computed: {
             todoItem() {
+                this.checkedItem.isChecked = this.data.completed
                 return this.data ? this.data : {};
-            },        
+            }, 
         },
         methods: {
             deleteItem(todoItemId)
             {
-                this.$emit("deleteItem", todoItemId);
+                console.log(todoItemId)
+                this.$emit("deleteItem", this.main_key);
             },
 
-            triggerAddMemo(todoItemId) {
-                this.todoItemId = todoItemId;
+            triggerAddMemo(editable) {
+                this.editable = editable
+                this.form.name = this.todoItem.name
                 this.$refs["add-memo-modal"].show();
             },
 
@@ -75,11 +95,28 @@
                 this.$refs['add-memo-modal'].hide()
             },
 
+            async completeItem(){
+
+                this.checkedItem.todoId = this.todoItem.id
+                this.checkedItem.isChecked = this.todoItem.completed
+
+                console.log(this.isChecked)
+
+                const { completed, success, message } = await Todo.complete(this.checkedItem);
+            },
+
 
             async saveMemo()
             {
-                this.form.todo_item_id = this.todoItemId;
-                const { created, success, message } = await Todo.addMemo(this.form);
+                
+                if (this.editable) {
+                    this.form.memoId = this.todoItem.memo.id;
+                }
+
+                this.form.todo_item_id = this.todoItem.id;
+
+                const { created, success, message, errors } = await Todo.addMemo(this.form);
+
                 if (success) {
                     this.form = {}
                     this.$refs['add-memo-modal'].hide()

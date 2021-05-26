@@ -71,12 +71,6 @@ export default {
         } 
     },
 
-    mounted() {
-        // console.log(this.props)
-        // this.minFDate = new Date(this.minDate);
-        // this.maxFDate = new Date(this.maxDate);
-    },
-
     methods: {
 
         onContext(ctx) {

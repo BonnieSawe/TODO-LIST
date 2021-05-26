@@ -1,19 +1,30 @@
 <template>
     <div class="">
-        <!-- <b-icon icon="three-dots" class="three-dots" font-scale="2" @click="showDropDown"></b-icon> -->
-        <b-dropdown  variant="link" toggle-class="text-decoration-none pr-5 drop-down" no-caret size="lg" right class="drop-down-div">
+        <b-dropdown  variant="link" toggle-class="text-decoration-none pr-5 drop-down" no-caret size="sm" right class="drop-down-div">
             <template #button-content>
                 <b-icon icon="three-dots" class="float-right three-dots" font-scale="2"></b-icon>
             </template>
-            <b-dropdown-item-button @click="pinItem">
-                <span class="mr-5"><i class="fa fa-thumb-tack"> </i></span>
+            <b-dropdown-item-button v-if="todoItem.pinned" @click="pinItem">
+                <span class="mr-5"><i class="fa fa-thumb-tack pinned"> </i></span>
+                Unpin from top
+            </b-dropdown-item-button>
+
+            <b-dropdown-item-button v-else @click="pinItem">
+                <span class="mr-5"><i class="fa fa-thumb-tack unpin"> </i></span>
                 Pin on the top
             </b-dropdown-item-button>
-            <b-dropdown-item-button @click="triggerAddMemo">
+
+            <b-dropdown-item-button v-if="todoItem.memo" @click="triggerAddMemo(true)">
+                <span class="mr-5"><i class="fa fa-file"> </i></span>
+                Edit memo
+            </b-dropdown-item-button>
+
+            <b-dropdown-item-button v-else @click="triggerAddMemo(false)">
                 <span class="mr-5"><i class="fa fa-file"> </i></span>
                 Add a memo
             </b-dropdown-item-button>
-            <b-dropdown-item-button @click="deleteItem">
+
+            <b-dropdown-item-button @click="deleteItem(todoItem.id)">
                 <span class="mr-5"><i class="fa fa-trash"> </i></span>
                 Delete
             </b-dropdown-item-button>
@@ -26,26 +37,31 @@ export default {
     name: 'ActionsButton',
     props: ["data"],
     computed: {
-        todoItemId() {
+        todoItem() {
             return this.data ? this.data : {};
         },        
     },
 
     methods: {
-        async deleteItem(){
-            const { deleted, success, message } = await Todo.delete(this.todoItemId);
+        async deleteItem(todoId){
+            const { deleted, success, message } = await Todo.delete(todoId);
 
+            console.log(message)
             if (success) {
-                this.$emit("deleteItem", this.todoItemId);
+                this.$emit("deleteItem", this.todoItem.main_key);
             }
         },
 
-        pinItem(){
+        async pinItem(status){
+            const { deleted, success, message } = await Todo.delete(todoId);
+
+            if (success) {
+                this.$emit("deleteItem", this.todoItem.main_key);
+            }
         },
         
-        triggerAddMemo() {
-            this.$emit("triggerAddMemo", this.todoItemId);
-            // this.$refs["add-memo-modal"].show();
+        triggerAddMemo(editable) {
+            this.$emit("triggerAddMemo", editable);
         },
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div v-if="todoItems.length">
-        <div class="" v-for="todoItem in todoItems" :key="todoItem.id">
+        <div class="" v-for="todoItem in todoItems" :key="todoItem.main_key" :index="parseInt(todoItem.id)+1">
             <SingleTask :data="todoItem" @deleteItem="deleteItem"></SingleTask>
         </div>
     </div>
@@ -17,6 +17,7 @@ export default {
     data(){
         return{
             day: {},
+            Hash: new Date().getTime()
         }
     },
     computed: {
@@ -27,9 +28,10 @@ export default {
     },
 
     methods: {
-        deleteItem(todoItemId)
+        deleteItem(main_key)
         {
-            this.todoItems.splice(this.todoItems.indexOf(todoItemId), 1);
+            console.log(main_key);
+            this.todoItems.splice(this.todoItems.indexOf(main_key), 1);
         },
     }
 }

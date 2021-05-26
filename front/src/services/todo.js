@@ -48,6 +48,24 @@ class Todo {
     }
   }
 
+  async complete(form) {
+    try {
+      const { data } = await $axios.post("/todo-items/complete/", form);
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
+  async pin(form) {
+    try {
+      const { data } = await $axios.post("/todo-items/complete/", form);
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
   async addMemo(form) {
     try {
       const { data } = await $axios.post("/todo-items/add-memo/", form);
