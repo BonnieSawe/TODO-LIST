@@ -99,12 +99,21 @@ class TodoItemController extends Controller
             return $this->sendError('Validation Error', $validator->errors());
         } 
 
-        $memo = Memo::create([
-            'name' => $request->input('name'),
-            'todo_item_id' => $request->input('todo_item_id'),
-        ]);
+        if ($memo = Memo::find($request->input('memoId'))) {
+            $memo->update([
+                'name' => $request->input('name'),
+            ]);
+            $message = 'updated';
+        }else {
+            $message = 'created';
+            $memo = Memo::create([
+                'name' => $request->input('name'),
+                'todo_item_id' => $request->input('todo_item_id'),
+            ]);
+        }
 
-        $success['created'] = new MemoResource($memo);
+
+        $success[$message] = new MemoResource($memo);
 
         return $this->sendResponse($success, 'Memo added successfully!');
     }
