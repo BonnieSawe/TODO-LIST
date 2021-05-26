@@ -14,7 +14,7 @@ class AddCompletedColumnToTodoItemsTable extends Migration
     public function up()
     {
         Schema::table('todo_items', function (Blueprint $table) {
-            //
+            $table->boolean('completed')->nullable()->after('pinned');
         });
     }
 
@@ -26,7 +26,7 @@ class AddCompletedColumnToTodoItemsTable extends Migration
     public function down()
     {
         Schema::table('todo_items', function (Blueprint $table) {
-            //
+            $table->dropColumn(['completed']);
         });
     }
 }

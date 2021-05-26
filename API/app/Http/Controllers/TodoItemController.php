@@ -88,6 +88,32 @@ class TodoItemController extends Controller
         return $this->sendResponse($success, 'Todo item added successfully!');
     }
 
+    public function pinItem(Request $request)
+    {
+        $item = TodoItem::find($request->input('todoId'));
+
+        $item->update([
+            'pinned' => $request->input('pinned') ? true : false
+        ]);
+
+        $success['created'] = new TodoItemResource($todo_item);
+
+        return $this->sendResponse($success, 'Todo item pinned successfully!');
+    }
+
+    public function completeItem(Request $request)
+    {
+        $item = TodoItem::find($request->input('todoId'));
+
+        $item->update([
+            'completed' => $request->input('completed') ? true : false
+        ]);
+
+        $success['created'] = new TodoItemResource($todo_item);
+
+        return $this->sendResponse($success, 'Todo item completed successfully!');
+    }
+
     public function addMemo(Request $request)
     {
         $validator = Validator::make($request->all(), [

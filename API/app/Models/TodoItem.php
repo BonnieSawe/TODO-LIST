@@ -17,6 +17,7 @@ class TodoItem extends Model
         'user_id',
         'date',
         'pinned',
+        'completed'
     ];
 
     public function user(): BelongsTo

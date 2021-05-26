@@ -19,6 +19,7 @@ class TodoItemResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'pinned' => $this->pinned,
+            'completed' => $this->completed,
             'user_id' => $this->user_id,
             'date' => $this->date,
             'created_at' => $this->created_at,
