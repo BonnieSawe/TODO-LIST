@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
         $faker = Faker::create();
         $user = User::create([
-            'email' =>  'bonnie@syntax.com',
+            'email' =>  'bonnie@sawe.com',
             'name' => $faker->name,
             'password' => bcrypt('123456'),
             'created_at' => now()->subMonths(3),
