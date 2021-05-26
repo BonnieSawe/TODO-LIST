@@ -72,13 +72,21 @@
     border-radius: 2px;
     border: 1px solid #2e3238;
     background-color: #6f757e;
+
   }
 
-  .custom-control-label{
+  .custom-checkbox{
+    .custom-control-input{
+      padding-right: 100px;
+    }
 
-    color: #ccd7e2;
-    padding-left: 20px;
+    .custom-control-label{
+
+      color: #ccd7e2;
+    }
   }
+
+  
 
   .custom-checkbox span{
     padding-left: 20px;

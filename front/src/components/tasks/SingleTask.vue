@@ -1,11 +1,11 @@
 <template>
     <div class="mb-3 row d-flex">
 
-        <div class="float-left pr-2 invisible">
+        <div class="float-left invisible">
             <i class="fa fa-thumb-tack pinned"></i>
         </div>
 
-        <div class="custom-control custom-checkbox">
+        <div class="custom-control custom-checkbox ">
             <b-form-checkbox
             :id="todoItem.main_key"
             v-model="todoItem.completed" @change="completeItem"
@@ -81,7 +81,6 @@
         methods: {
             deleteItem(todoItemId)
             {
-                console.log(todoItemId)
                 this.$emit("deleteItem", this.main_key);
             },
 
@@ -100,7 +99,7 @@
                 this.checkedItem.todoId = this.todoItem.id
                 this.checkedItem.isChecked = this.todoItem.completed
 
-                console.log(this.isChecked)
+                console.log(this.checkedItem)
 
                 const { completed, success, message } = await Todo.complete(this.checkedItem);
             },
