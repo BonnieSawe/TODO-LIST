@@ -106,10 +106,10 @@ class TodoItemController extends Controller
         $item = TodoItem::find($request->input('todoId'));
 
         $item->update([
-            'completed' => $request->input('completed') ? true : false
+            'completed' => $request->input('isChecked') ? true : false
         ]);
 
-        $success['created'] = new TodoItemResource($todo_item);
+        $success['completed'] = new TodoItemResource($item);
 
         return $this->sendResponse($success, 'Todo item completed successfully!');
     }

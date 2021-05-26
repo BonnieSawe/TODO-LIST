@@ -41,5 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post ('store', [TodoItemController::class, 'store']);
         Route::post ('delete', [TodoItemController::class, 'destroy']);
         Route::post ('add-memo', [TodoItemController::class, 'addMemo']);
+        Route::post ('complete', [TodoItemController::class, 'completeItem']);
+        Route::post ('pin', [TodoItemController::class, 'pinItem']);
     });
 });

@@ -16,6 +16,7 @@ class TodoItemResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            'main_key' => uniqid(),
             'id' => $this->id,
             'name' => $this->name,
             'pinned' => $this->pinned,
