@@ -17,7 +17,7 @@ class CreateTodoItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('user_id');
-            $table->dateTime('date');
+            $table->date('date');
             $table->timestamps();
             $table->softDeletes();
         });
