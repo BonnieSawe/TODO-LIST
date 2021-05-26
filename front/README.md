@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # staff
+=======
+# TODO-APP
+>>>>>>> develop
 
 ## Project setup
 ```

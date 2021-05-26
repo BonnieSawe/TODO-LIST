@@ -17,6 +17,7 @@ function createRouter() {
     routes,
   });
 
+<<<<<<< HEAD
   router.beforeEach(beforeEach);
   router.afterEach(afterEach);
 
@@ -32,3 +33,7 @@ async function beforeEach(to, from, next) {
 }
 
 async function afterEach(to, from, next) {}
+=======
+  return router;
+}
+>>>>>>> develop

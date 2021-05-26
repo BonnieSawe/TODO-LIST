@@ -49,10 +49,17 @@
         </div>
 
         <div class="mt-3">
+<<<<<<< HEAD
             <router-link :to="{name: 'register'}" class="btn btn-block btn-social">
                 <span class="pr-2"><i class="fa fa-google"></i></span>
                 Sign In with Google
             </router-link>
+=======
+            <b-button @click="socialLogin" class="btn btn-block btn-social">
+                <span class="pr-2"><i class="fa fa-google"></i></span>
+                Sign In with Google
+            </b-button>
+>>>>>>> develop
         </div>
 
         <br class="my-4">
@@ -73,14 +80,26 @@ export default {
   data() {
     return {
       user: {
+<<<<<<< HEAD
         email: "bonnie@syntax.com",
         password: "secret",
+=======
+        email: "badboneye@gmail.com",
+        password: "123456",
+>>>>>>> develop
       },
       error: null,
       loading: false,
     };
   },
   methods: {
+<<<<<<< HEAD
+=======
+    async socialLogin(){
+      const data = await Auth.socialLogin('google');
+      console.log(data);
+    },
+>>>>>>> develop
     async login() {
       this.loading = true;
       const { data, success, message } = await Auth.login(this.user);
@@ -88,11 +107,17 @@ export default {
       if (message) {
         this.loading = false;
       }
+<<<<<<< HEAD
 
       if (success) {
         await this.$store.dispatch("auth/saveToken", {
           token: data.access_token,
           remember: this.rememberMe,
+=======
+      if (success) {
+        await this.$store.dispatch("auth/saveToken", {
+          token: data.token,
+>>>>>>> develop
         });
 
         // Fetch the user.

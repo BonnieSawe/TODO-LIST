@@ -37,7 +37,11 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
+<<<<<<< HEAD
             'channels' => ['single'],
+=======
+            'channels' => ['daily'],
+>>>>>>> develop
             'ignore_exceptions' => false,
         ],
 

@@ -4,11 +4,34 @@ import Register from "@/views/auth/Register";
 import Login from "@/views/auth/Login";
 import ForgotPassword from "@/views/auth/ForgotPassword";
 import ResetPassword from "@/views/auth/ResetPassword";
+<<<<<<< HEAD
+=======
+import store from '@/store'
+
+function guardRoute(to, from, next)
+{
+  var isAuthenticated = store.getters["auth/check"];
+
+  if(isAuthenticated) 
+  {
+    next(); 
+  } 
+  else
+  {
+    next('/login');
+  }
+}
+
+>>>>>>> develop
 
 export const routes = [
       {
         path: "/",
         name: "home",
+<<<<<<< HEAD
+=======
+        beforeEnter : guardRoute,
+>>>>>>> develop
         component: Home,
       },
 
