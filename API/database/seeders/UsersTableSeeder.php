@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'email' =>  'bonnie@sawe.com',
             'name' => $faker->name,
             'password' => bcrypt('123456'),
-            'created_at' => now()->subMonths(3),
+            'created_at' => now()->subMonths(3)->subDays(22),
         ]);
     }
 }

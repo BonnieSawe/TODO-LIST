@@ -24,7 +24,6 @@ class TodoItemController extends Controller
 
     public function getDayItems(Request $request)
     {
-        // return Auth::id();
         $todo_items = TodoItem::where('user_id', Auth::id())
                         ->where('date', Carbon::parse($request->date))
                         ->with('memo')
@@ -129,9 +128,7 @@ class TodoItemController extends Controller
             $memo->update([
                 'name' => $request->input('name'),
             ]);
-            $message = 'updated';
         }else {
-            $message = 'created';
             $memo = Memo::create([
                 'name' => $request->input('name'),
                 'todo_item_id' => $request->input('todo_item_id'),
@@ -139,7 +136,7 @@ class TodoItemController extends Controller
         }
 
 
-        $success[$message] = new MemoResource($memo);
+        $success['created'] = new MemoResource($memo);
 
         return $this->sendResponse($success, 'Memo added successfully!');
     }
