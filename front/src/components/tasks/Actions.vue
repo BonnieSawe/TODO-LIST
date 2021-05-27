@@ -58,7 +58,7 @@ export default {
             const { pinned, success, message } = await Todo.pin(form);
 
             if (success) {
-                this.$emit("pinItem", this.todoItem.main_key);
+                this.$emit("pinItem", pinned);
             }
         },
         

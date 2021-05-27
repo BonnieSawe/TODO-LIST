@@ -2,7 +2,7 @@
     <div class="mb-3">
         <h5 class="day-title pr-3">{{day.day_name}}</h5>
         <hr class="mt-2">
-        <div class="" v-for="todoItem in todoItems" :key="'w-'+day.index+todoItem.id">
+        <div class="" v-for="todoItem in todoItems" :key="todoItem.main_key">
             <SingleTask :data="todoItem" :uniqueKey="'week'" @deleteItem="deleteItem"></SingleTask>
         </div>
     </div>
@@ -23,9 +23,9 @@ export default {
         },
     },
     methods: {
-        deleteItem(todoItemId)
+        deleteItem(todoItemKey)
         {
-            this.todoItems.splice(this.todoItems.indexOf('w-'+this.day.index+todoItemId), 1);
+            this.todoItems.splice(this.todoItems.indexOf(todoItemKey), 1);
         },
     }
     
