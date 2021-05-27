@@ -16,12 +16,7 @@
 
             </b-form-checkbox>
 
-            <!-- <input type="checkbox" class="custom-control-input" :id="todoItem.main_key" name="">
-            <label class="custom-control-label" :for="todoItem.main_key">{{todoItem.name}}</label> -->
-
         </div>
-
-        <!-- <AddMemo></AddMemo> -->
 
         <b-modal ref="add-memo-modal" centered hide-footer hide-header title="Add Memo" ::passedObject="todoItemId" class="text-center">
             <h3 class="add-memo-title pt-2 pb-2" v-if="!editable">ADD A MEMO</h3>
@@ -35,15 +30,12 @@
                     v-model="form.name"
                     required
                 />
-                <b-button class="btn-sm submit-memo mt-3 mr-2 col-md-3" v-if="!editable" type="submit">
-                    <span class="btn-text" >Add Memo</span>
-                </b-button>
-
-                <b-button class="btn-sm submit-memo mt-3 mr-2 col-md-3"  v-else type="submit">
-                    <span class="btn-text">Edit Memo</span>
-                </b-button>
-
-                <b-button class="btn-sm cancel-memo mt-3 mr-2 col-md-3" @click="hideModal"><span class="btn-text">Cancel</span></b-button>
+                <div class="mt-3">
+                    <b-button size="sm" class=" mr-2 submit-memo" v-if="!editable" type="submit"> Add Memo</b-button>
+                    <b-button size="sm" class=" mr-2 submit-memo" v-else type="submit"> Edit Memo</b-button>
+                    
+                    <b-button size="sm" class="cancel-memo" @click="hideModal">Cancel</b-button>
+                </div>
             </form>
         </b-modal>
 
@@ -101,8 +93,6 @@
                 this.checkedItem.todoId = this.todoItem.id
                 this.checkedItem.isChecked = this.todoItem.completed
 
-                console.log(this.checkedItem)
-
                 const { completed, success, message } = await Todo.complete(this.checkedItem);
             },
 
@@ -119,6 +109,7 @@
                 const { created, success, message, errors } = await Todo.addMemo(this.form);
 
                 if (success) {
+                    this.todoItem.memo = created
                     this.form = {}
                     this.$refs['add-memo-modal'].hide()
                 } else {
@@ -159,25 +150,18 @@
         }
 
         .submit-memo{
-            width: 90px;
             height: 42px;
             border-radius: 5px;
             background-color: #e55c8a;
-            color:#ccd7e2;
+            color:#ccd7e2 !important;
+            
         }
 
         .cancel-memo{
-            width: 90px;
             height: 42px;
             border-radius: 5px;
             background-color: #6f757e;
-            color:#ccd7e2;
-        }
-
-        .btn-text{
-            color: #ccd7e2;
-            font-size: 12px;
-            font-weight: 600;
+            color:#ccd7e2 !important;
         }
     }
 </style>

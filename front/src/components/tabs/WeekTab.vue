@@ -38,7 +38,6 @@ export default {
         },
 
         addTodoItem(item) {
-            console.log(item)
             // this.todoItems.push(item);
         },
     }

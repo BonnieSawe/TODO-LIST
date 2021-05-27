@@ -30,7 +30,6 @@ export default {
     methods: {
         deleteItem(main_key)
         {
-            console.log(main_key);
             this.todoItems.splice(this.todoItems.indexOf(main_key), 1);
         },
     }

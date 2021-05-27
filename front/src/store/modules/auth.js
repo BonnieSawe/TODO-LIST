@@ -22,7 +22,6 @@ export const mutations = {
 
   FETCH_USER_SUCCESS (state, user) {
     state.user = user
-    console.log('state', state)
   },
 
   FETCH_USER_FAILURE (state) {
@@ -50,7 +49,6 @@ export const actions = {
   async fetchUser ({ commit }) {
     try {
       const { data } = await axios.get('/auth/user')
-      console.log('data', data)
       commit('FETCH_USER_SUCCESS', data)
     } catch (e) {
       Cookies.remove('token')

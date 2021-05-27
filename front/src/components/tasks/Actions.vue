@@ -46,7 +46,6 @@ export default {
         async deleteItem(todoId){
             const { deleted, success, message } = await Todo.delete(todoId);
 
-            console.log(message)
             if (success) {
                 this.$emit("deleteItem", this.todoItem.main_key);
             }

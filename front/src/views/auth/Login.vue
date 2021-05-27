@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       user: {
-        email: "badboneye@gmail.com",
+        email: "bonnie@sawe.com",
         password: "123456",
       },
       error: null,
@@ -83,7 +83,6 @@ export default {
   methods: {
     async socialLogin(){
       const data = await Auth.socialLogin('google');
-      console.log(data);
     },
     async login() {
       this.loading = true;
