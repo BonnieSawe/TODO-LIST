@@ -27,8 +27,19 @@ class TodoItemController extends Controller
         $todo_items = TodoItem::where('user_id', Auth::id())
                         ->where('date', Carbon::parse($request->date))
                         ->with('memo')
+                        ->where('pinned', '!=', true)
                         ->orderBy('created_at', 'desc')
                         ->get();
+
+        $pinned_items = TodoItem::where('user_id', Auth::id())
+                        ->where('date', Carbon::parse($request->date))
+                        ->with('memo')
+                        ->where('pinned', true)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        $success['pinned_items'] = TodoItemResource::collection($pinned_items);
+
         $success['todo_items'] = TodoItemResource::collection($todo_items);
 
         return $this->sendResponse($success, 'Todo items fetched successfully!');
@@ -47,6 +58,13 @@ class TodoItemController extends Controller
                         ->get()
                         ->groupBy('day');
 
+        // $pinned_items = TodoItem::where('user_id', Auth::id())
+        //                 ->whereBetween('date', [$from, $to])
+        //                 ->where('pinned', true)
+        //                 ->with('memo')
+        //                 ->orderBy('created_at', 'desc')
+        //                 ->get();
+
         $formatted_days = collect();
         
         $i = 0;
@@ -59,6 +77,7 @@ class TodoItemController extends Controller
         }
 
         $success['days'] = $formatted_days;
+        // $success['pinned_items'] = TodoItemResource::collection($pinned_items);
 
         return $this->sendResponse($success, 'Todo items fetched successfully!');
     }
@@ -69,8 +88,6 @@ class TodoItemController extends Controller
             'name' => 'required|string',
             'date' => 'required|date',
         ]);
-
-        info($request->all());
 
         if($validator->fails()) {
             return $this->sendError('Validation Error', $validator->errors());

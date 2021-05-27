@@ -4,10 +4,6 @@
             <SingleTask :data="todoItem" @deleteItem="deleteItem"></SingleTask>
         </div>
     </div>
-    
-    <div v-else>
-        <NoItems></NoItems>
-    </div>
 </template>
 <script>
 

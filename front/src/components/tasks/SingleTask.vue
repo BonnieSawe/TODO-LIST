@@ -1,7 +1,11 @@
 <template>
     <div class="mb-3 row d-flex">
 
-        <div class="float-left invisible">
+        <div v-if="todoItem.pinned == true" class="float-left pr-3">
+            <i class="fa fa-thumb-tack pinned"></i>
+        </div>
+
+        <div v-else class="float-left invisible">
             <i class="fa fa-thumb-tack pinned"></i>
         </div>
 
@@ -22,6 +26,7 @@
                 :data="todoItem" 
                 @deleteItem="deleteItem" 
                 @triggerAddMemo="triggerAddMemo"
+                @pinItem="pinItem"
             >
             </Actions>
         </div>
@@ -79,6 +84,12 @@
                 this.editable = editable
                 this.form.name = this.todoItem.name
                 this.$refs["add-memo-modal"].show();
+            },
+
+            pinItem (task) {
+                console.log(2, task)
+
+                this.$emit('pinItem', task);
             },
 
             hideModal() {
