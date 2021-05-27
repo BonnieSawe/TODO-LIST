@@ -25,9 +25,10 @@ class TodoItemController extends Controller
     public function getDayItems(Request $request)
     {
         $todo_items = TodoItem::where('user_id', Auth::id())
-                        ->where('date', Carbon::parse($request->date))
                         ->with('memo')
-                        ->where('pinned', '!=', true)
+                        ->where('pinned', false)
+                        ->orWhere('pinned', null)
+                        ->where('date', Carbon::parse($request->date))
                         ->orderBy('created_at', 'desc')
                         ->get();
 
