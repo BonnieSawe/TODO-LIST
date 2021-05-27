@@ -59,18 +59,11 @@ class TodoItemController extends Controller
                         ->get()
                         ->groupBy('day');
 
-        // $pinned_items = TodoItem::where('user_id', Auth::id())
-        //                 ->whereBetween('date', [$from, $to])
-        //                 ->where('pinned', true)
-        //                 ->with('memo')
-        //                 ->orderBy('created_at', 'desc')
-        //                 ->get();
-
         $formatted_days = collect();
         
         $i = 0;
         foreach ($days as $key => $day_items) {
-            $new_day = new \StdClass;
+            $new_day = new \StdClass();
             $new_day->index = $i++;
             $new_day->day_name = $key;
             $new_day->todo_items = TodoItemResource::collection($day_items);
@@ -78,7 +71,6 @@ class TodoItemController extends Controller
         }
 
         $success['days'] = $formatted_days;
-        // $success['pinned_items'] = TodoItemResource::collection($pinned_items);
 
         return $this->sendResponse($success, 'Todo items fetched successfully!');
     }
