@@ -15,7 +15,15 @@
             <TaskMemo class="" :data="todoItem.memo"></TaskMemo>
 
             </b-form-checkbox>
+        </div>
 
+        <div class="ml-auto pl-5">
+            <Actions 
+                :data="todoItem" 
+                @deleteItem="deleteItem" 
+                @triggerAddMemo="triggerAddMemo"
+            >
+            </Actions>
         </div>
 
         <b-modal ref="add-memo-modal" centered hide-footer hide-header title="Add Memo" ::passedObject="todoItemId" class="text-center">
@@ -38,17 +46,6 @@
                 </div>
             </form>
         </b-modal>
-
-
-        <div class="ml-auto pl-5">
-            <Actions 
-                :data="todoItem" 
-                @deleteItem="deleteItem" 
-                @triggerAddMemo="triggerAddMemo"
-            >
-
-            </Actions>
-        </div>
     </div>
 </template>
 <script>

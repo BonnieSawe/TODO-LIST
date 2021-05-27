@@ -92,12 +92,14 @@ class TodoItemController extends Controller
         $item = TodoItem::find($request->input('todoId'));
 
         $item->update([
-            'pinned' => $request->input('pinned') ? true : false
+            'pinned' => $request->input('isPinned') ? true : false
         ]);
 
-        $success['created'] = new TodoItemResource($todo_item);
+        $message = $item->pinned ? 'pinned' : 'unpinned';
 
-        return $this->sendResponse($success, 'Todo item pinned successfully!');
+        $success['pinned'] = new TodoItemResource($item);
+
+        return $this->sendResponse($success, 'Todo item '.$message.' successfully!');
     }
 
     public function completeItem(Request $request)

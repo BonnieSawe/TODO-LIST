@@ -4,12 +4,12 @@
             <template #button-content>
                 <b-icon icon="three-dots" class="float-right three-dots" font-scale="2"></b-icon>
             </template>
-            <b-dropdown-item-button v-if="todoItem.pinned" @click="pinItem">
+            <b-dropdown-item-button v-if="todoItem.pinned" @click="pinItem(false)">
                 <span class="mr-5"><i class="fa fa-thumb-tack pinned"> </i></span>
                 Unpin from top
             </b-dropdown-item-button>
 
-            <b-dropdown-item-button v-else @click="pinItem">
+            <b-dropdown-item-button v-else @click="pinItem(true)">
                 <span class="mr-5"><i class="fa fa-thumb-tack unpin"> </i></span>
                 Pin on the top
             </b-dropdown-item-button>
@@ -52,10 +52,13 @@ export default {
         },
 
         async pinItem(status){
-            const { deleted, success, message } = await Todo.delete(todoId);
+            var form = {}
+            form.isPinned = status;
+            form.todoId = this.todoItem.id;
+            const { pinned, success, message } = await Todo.pin(form);
 
             if (success) {
-                this.$emit("deleteItem", this.todoItem.main_key);
+                this.$emit("pinItem", this.todoItem.main_key);
             }
         },
         

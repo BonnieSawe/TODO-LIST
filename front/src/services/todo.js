@@ -59,7 +59,7 @@ class Todo {
 
   async pin(form) {
     try {
-      const { data } = await $axios.post("/todo-items/complete/", form);
+      const { data } = await $axios.post("/todo-items/pin/", form);
       return data;
     } catch (error) {
       return error.response.data;
