@@ -13,7 +13,7 @@
             <div class="" v-for="pinnedTask in pinnedTasks" :key="pinnedTask.main_key" :index="pinnedTask.main_key">
                 <SingleTask :data="pinnedTask" @pinItem="pinItem" @deleteItem="deleteItem"></SingleTask>
             </div>
-            <hr class="pb-4">
+            <hr v-if="todoItems.length > 0" class="pb-4">
         </div>
 
         <AllTasks v-if="todoItems.length" :data="todoItems"> </AllTasks>

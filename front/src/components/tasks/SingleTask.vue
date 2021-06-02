@@ -5,7 +5,7 @@
             <i class="fa fa-thumb-tack pinned"></i>
         </div>
 
-        <div v-else class="float-left invisible">
+        <div v-else class="float-left invisible pr-3">
             <i class="fa fa-thumb-tack pinned"></i>
         </div>
 
