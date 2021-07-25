@@ -13,24 +13,6 @@
         <a v-if="!disableNext" role="button" class="carousel-control-next" @click="triggerSwipeDay(currentDate.date, 1)">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </a>
-
-        <b-toast id="minToast" variant="warning" solid>
-            <template #toast-title>
-                <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
-                <div class="d-flex flex-grow-1 align-items-baseline">
-                    <strong class="mr-auto">Min Date Reached</strong>
-                </div>
-            </template>
-        </b-toast>
-
-        <b-toast id="maxToast" variant="warning" solid>
-            <template #toast-title>
-                <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
-                <div class="d-flex flex-grow-1 align-items-baseline">
-                    <strong class="mr-auto">Max Date Reached</strong>
-                </div>
-            </template>
-        </b-toast>
     </div>
 </template>
 <script>
@@ -77,7 +59,6 @@
                 if (this.formattedcurrentDate >= formattedMaxDate) return true
                 return false
             }
-            
         },
         methods: {
             triggerSwipeDay(currentDate, direction) {           

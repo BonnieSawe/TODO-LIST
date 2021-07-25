@@ -7,30 +7,12 @@
                     <span>{{startDateDay + ' - ' + endDateDay}}</span>
                 </div>
             </div>
-            <a role="button" class="carousel-control-prev" @click="triggerSwipeWeek(endDate, -1)">
+            <a v-if="!disablePrev" role="button" class="carousel-control-prev" @click="triggerSwipeWeek(endDate, -1)">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             </a>
-            <a role="button" class="carousel-control-next" @click="triggerSwipeWeek(endDate, 1) ">
+            <a v-if="!disableNext" role="button" class="carousel-control-next" @click="triggerSwipeWeek(endDate, 1) ">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
             </a>
-
-            <b-toast id="min-toast" variant="warning" solid>
-                <template #toast-title>
-                    <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
-                    <div class="d-flex flex-grow-1 align-items-baseline">
-                        <strong class="mr-auto">Min Date Reached</strong>
-                    </div>
-                </template>
-            </b-toast>
-
-            <b-toast id="max-toast" variant="warning" solid>
-                <template #toast-title>
-                    <b-img blank blank-color="#ff9b99" class="mr-2" width="12" height="12"></b-img>
-                    <div class="d-flex flex-grow-1 align-items-baseline">
-                        <strong class="mr-auto">Max Date Reached</strong>
-                    </div>
-                </template>
-            </b-toast>
         </div>
 
         <AddTask :data="null" :minDate="startDate" :maxDate="endDate" :weekSelected="true" @newTodoItem="addTodoItem"></AddTask>
@@ -69,25 +51,25 @@
 
             minDate() {
                 return moment(store.getters["auth/user"].created_at).format("MMM D, YYYY");
-            },        
+            },
+
+            disablePrev()
+            {
+                if (moment(moment(this.startDate).format("MMM D, YYYY")).isSameOrBefore(moment(this.minDate))) return true
+                return false
+            },
+
+            disableNext()
+            {
+                if (moment(moment(this.endDate).format("MMM D, YYYY")).isSameOrAfter(moment(this.maxDate))) return true
+                return false
+            }
         },
         methods: {
             triggerSwipeWeek(date, direction) {
-                
-
-                var formattedStartDate = this.formatDMY(this.startDate);
-                var formattedMinDate = this.formatDMY(this.minDate);
-
-                if (moment(formattedStartDate).isSameOrBefore(formattedMinDate) && direction == -1) {
-                    this.$bvToast.show('min-toast');
-                }else if(moment(date).isSameOrAfter(moment(this.maxDate)) && direction == 1)
-                {
-                    this.$bvToast.show('max-toast');
-                }else{
-                    this.formatDate(
-                        moment(date).add(direction, 'weeks')
-                    )   
-                }             
+                this.formatDate(
+                    moment(date).add(direction, 'weeks')
+                )             
             },
 
             formatDMY(date)
