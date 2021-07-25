@@ -9,14 +9,7 @@
 
         <AddTask :data="currentDate.date" @newTodoItem="addTodoItem"></AddTask>
 
-        <div v-if="pinnedTasks.length">
-            <div class="" v-for="pinnedTask in pinnedTasks" :key="pinnedTask.main_key" :index="pinnedTask.main_key">
-                <SingleTask :data="pinnedTask" @pinItem="pinItem" @deleteItem="deleteItem"></SingleTask>
-            </div>
-            <hr v-if="todoItems.length > 0" class="pb-4">
-        </div>
-
-        <AllTasks v-if="todoItems.length" :data="todoItems"> </AllTasks>
+        <AllTasks v-if="todoItems.length" :pinnedTasks="pinnedTasks" :data="todoItems"> </AllTasks>
     
         <NoItems v-if="todoItems.length == 0 && pinnedTasks.length == 0"></NoItems>
 
@@ -72,24 +65,6 @@ export default {
         addTodoItem(item) {
             this.todoItems.push(item);
         },
-
-        deleteItem(main_key)
-        {
-            this.pinnedTasks.splice(this.todoItems.indexOf(main_key), 1);
-        },
-
-        pinItem(task)
-        {
-            if (task.pinned) {
-                this.pinnedTasks.push(task);
-                this.todoItems.splice(this.todoItems.indexOf(task.main_key), 1);
-
-            }else{
-                this.pinnedTasks.splice(this.pinnedTasks.indexOf(task.main_key), 1);
-                this.todoItems.push(task);
-            }
-
-        }
     }
 
 }

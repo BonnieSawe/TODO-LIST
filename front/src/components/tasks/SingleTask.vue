@@ -57,7 +57,7 @@
     import Todo from '@/services/todo'
     export default {
         name: 'SingleTask',
-        props: ["data", "uniqueKey"],
+        props: ["data", "indexValue"],
         data() {
             return {
                 form: {},
@@ -87,9 +87,7 @@
             },
 
             pinItem (task) {
-                console.log(2, task)
-
-                this.$emit('pinItem', task);
+                this.$emit('pinItem', {'task': task, 'indexValue': this.indexValue});
             },
 
             hideModal() {
