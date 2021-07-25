@@ -2,9 +2,7 @@
     <div class="mb-3">
         <h5 class="day-title pr-3">{{day.day_name}}</h5>
         <hr class="mt-2">
-        <div class="" v-for="todoItem in todoItems" :key="todoItem.main_key">
-            <SingleTask :data="todoItem" :uniqueKey="'week'" @deleteItem="deleteItem"></SingleTask>
-        </div>
+        <AllTasks v-if="todoItems.length || pinnedTasks.length" :pinnedTasks="pinnedTasks" :data="todoItems"> </AllTasks>
     </div>
 </template>
 
@@ -12,7 +10,7 @@
 
 export default {
     name: 'DayTasks',
-    props: ["data"],
+    props: ["data", "pinnedTasks"],
     computed: {
         day() {
             return this.data ? this.data : {};
@@ -20,7 +18,7 @@ export default {
 
         todoItems() {
             return this.data.todo_items ? this.data.todo_items : {};
-        },
+        }
     },
     methods: {
         deleteItem(todoItemKey)

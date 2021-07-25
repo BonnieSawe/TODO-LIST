@@ -51,10 +51,18 @@ class TodoItemController extends Controller
         $from = Carbon::parse($request->startDate);
         $to = Carbon::parse($request->endDate);
 
+        $pinned_items = TodoItem::where('user_id', Auth::id())
+                        ->whereBetween('date', [$from, $to])
+                        ->with('memo')
+                        ->where('pinned', true)
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
         $days = TodoItem::where('user_id', Auth::id())
                         ->select( DB::raw('DAYNAME(todo_items.date) as day'), 'todo_items.*')
                         ->whereBetween('date', [$from, $to])
                         ->with('memo')
+                        ->where('pinned', false)
                         ->orderBy('created_at', 'desc')
                         ->get()
                         ->groupBy('day');
@@ -70,6 +78,7 @@ class TodoItemController extends Controller
             $formatted_days->push($new_day);
         }
 
+        $success['pinned_items'] = TodoItemResource::collection($pinned_items);
         $success['days'] = $formatted_days;
 
         return $this->sendResponse($success, 'Todo items fetched successfully!');
@@ -164,7 +173,7 @@ class TodoItemController extends Controller
             return $this->sendError('Validation Error', $validator->errors());
         } 
 
-        $todo_item = TodoItem::find($id)->update($request->all());
+        $todo_item = TodoItem::find($request->id)->update($request->all());
 
         $success['todo_item'] = new TodoItemResource($todo_item);
 

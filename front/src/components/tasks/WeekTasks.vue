@@ -1,7 +1,7 @@
 <template>
     <div v-if="days.length">
         <div class="" v-for="day in days" :key="day.index">
-            <DayTasks :data="day"></DayTasks>
+            <DayTasks :data="day" :pinnedTasks="pinnedTasks"></DayTasks>
         </div>
     </div>
     <div v-else>
@@ -12,7 +12,7 @@
 
 export default {
     name: 'WeekTasks',
-    props: ["data"],
+    props: ["data", "pinnedTasks"],
     computed: {
         days() {
             return this.data ? this.data : {};

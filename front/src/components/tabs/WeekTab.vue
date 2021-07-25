@@ -8,7 +8,7 @@
 
         <hr v-if="pinnedTasks" class="mt-2">
 
-        <WeekTasks :data="days"> </WeekTasks>
+        <WeekTasks :data="days" :pinnedTasks="pinnedTasks"> </WeekTasks>
 
     </b-tab>
 </template>
@@ -24,14 +24,16 @@ export default {
         return {
             pinnedTasks: false,
             days:[],
+            pinnedTasks:[],
         }
     },
     methods: { 
         async getWeekItems(startDate, endDate){
-            const {days, success, message} = await Todo.getWeekItems(startDate, endDate);
+            const {days, pinned_items, success, message} = await Todo.getWeekItems(startDate, endDate);
 
             if (success) {
                 this.days = days;
+                this.pinnedTasks = pinned_items;
             }else{
                 this.days = [];
             }

@@ -9,7 +9,7 @@
 
         <AddTask :data="currentDate.date" @newTodoItem="addTodoItem"></AddTask>
 
-        <AllTasks v-if="todoItems.length" :pinnedTasks="pinnedTasks" :data="todoItems"> </AllTasks>
+        <AllTasks v-if="todoItems.length || pinnedTasks.length" :pinnedTasks="pinnedTasks" :data="todoItems"> </AllTasks>
     
         <NoItems v-if="todoItems.length == 0 && pinnedTasks.length == 0"></NoItems>
 
