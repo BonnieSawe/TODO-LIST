@@ -80,7 +80,6 @@ export default {
 
         pinItem(task)
         {
-            console.log(3, task)
             if (task.pinned) {
                 this.pinnedTasks.push(task);
                 this.todoItems.splice(this.todoItems.indexOf(task.main_key), 1);

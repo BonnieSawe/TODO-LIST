@@ -5,6 +5,7 @@ class Auth {
 
   async login(form) {
     try {
+      console.log(process.env.VUE_APP_API_BASE_URL)
       const { data } = await $axios.post(`/auth/login`, form);
       return data
     } catch (error) {

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Socialite;
+use Exception;
+    use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as ProviderUser;
 
 class SocialAuthController extends Controller
@@ -20,15 +23,20 @@ class SocialAuthController extends Controller
     {
         try {
             
-            $googleUser = Socialite::driver($service)->stateless()->user();
+            $$oAuthUser = Socialite::driver($service)->stateless()->user();
 
-            $existUser = User::where('email',$googleUser->email)->first();
+            $existUser = User::where('email',$$oAuthUser->email)->first();
             
 
             if($existUser) {
                 Auth::loginUsingId($existUser->id);
             }
             else {
+                $name = $oAuthUser->getName();
+                $exploded = explode(' ', trim($event->user->name));
+                $last_name = end($exploded);
+                $first_names = trim(str_replace((string) $last_name, '', (string) $event->user->name));
+                
                 $user = User::create([
                     'name' => $first_name.' '.$other_names,
                     'email' => $providerUser->getEmail(),
