@@ -7,10 +7,10 @@
                 <span>{{currentDate.day}}</span>
             </div>
         </div>
-        <a role="button" class="carousel-control-prev"  @click="(triggerSwipeDay(currentDate.date, -1))">
+        <a v-if="!disablePrev" role="button" class="carousel-control-prev"  @click="(triggerSwipeDay(currentDate.date, -1))">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         </a>
-        <a role="button" class="carousel-control-next" @click="triggerSwipeDay(currentDate.date, 1)">
+        <a v-if="!disableNext" role="button" class="carousel-control-next" @click="triggerSwipeDay(currentDate.date, 1)">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
         </a>
 
@@ -59,23 +59,29 @@
             minDate() {
                 return moment(store.getters["auth/user"].created_at).format("MMM D, YYYY");
             }, 
+
+            formattedcurrentDate() {
+                return this.formatDMY(this.currentDate.date)
+            },
+
+            disablePrev()
+            {
+                var formattedMinDate = this.formatDMY(this.minDate);
+                if (this.formattedcurrentDate <= formattedMinDate) return true
+                return false
+            },
+
+            disableNext()
+            {
+                var formattedMaxDate = this.formatDMY(moment(this.maxDate).format("MMM D, YYYY"));
+                if (this.formattedcurrentDate >= formattedMaxDate) return true
+                return false
+            }
             
         },
         methods: {
-            triggerSwipeDay(currentDate, direction) {
-
-                var formattedcurrentDate = this.formatDMY(currentDate);
-                var formattedMaxDate = this.formatDMY(moment(this.maxDate).format("MMM D, YYYY"));
-                var formattedMinDate = this.formatDMY(this.minDate);
-
-                if (formattedcurrentDate <= formattedMinDate && direction == -1) {
-                    this.$bvToast.show('min-toast');
-                }else if(formattedcurrentDate >= formattedMaxDate && direction == 1)
-                {
-                    this.$bvToast.show('max-toast');
-                }else{
-                    this.$emit("triggerSwipeDay", currentDate, direction);
-                }             
+            triggerSwipeDay(currentDate, direction) {           
+                this.$emit("triggerSwipeDay", currentDate, direction);
             },
 
             formatDMY(date)

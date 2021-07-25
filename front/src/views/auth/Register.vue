@@ -103,21 +103,21 @@
 
             if (success) {
 
-                if (data.email_verified_at == null) {
-                    this.mustVerifyEmail = true;
-                } else {
-                    const { data, success, message } = await Auth.login(this.user);
+                // if (data.email_verified_at == null) {
+                //     this.mustVerifyEmail = true;
+                // } else {
+                const { data, success, message } = await Auth.login(this.user);
 
-                    this.access_token = data.token;
+                this.access_token = data.token;
 
-                    this.$store.dispatch("auth/saveToken", { access_token:this.access_token });
+                this.$store.dispatch("auth/saveToken", { access_token:this.access_token });
 
-                    // Update the user.
-                    await this.$store.dispatch("auth/updateUser", { user: data });
+                // Update the user.
+                await this.$store.dispatch("auth/updateUser", { user: data });
 
-                    // Redirect home.
-                    this.$router.push({ name: "home" });
-                }
+                // Redirect home.
+                this.$router.push({ name: "home" });
+                // }
             } else {
                 this.error = message+' : '+errors;
             }
